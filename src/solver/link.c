@@ -48,6 +48,9 @@
 //   - Warning for conduit elevation drop < MIN_DELTA_Z restored.
 //   Build 5.2.4:
 //   - Conduit evap+seepage loss under DW routing limited by conduit volume.
+//   Build 5.2.5:
+//   - Modified to use GRAVITY defined in const.h instead of local specification
+//     for consistency.
 //-----------------------------------------------------------------------------
 #define _CRT_SECURE_NO_DEPRECATE
 
@@ -1140,7 +1143,7 @@ void  conduit_validate(int j, int k)
     //     (factor of 0.3 is for circular pipe 95% full)
     // NOTE: this factor was used in the past for a modified version of
     //       Kinematic Wave routing but is now deprecated.
-    aa = Conduit[k].beta / sqrt(32.2) *
+    aa = Conduit[k].beta / sqrt(GRAVITY) *
          pow(Link[j].xsect.yFull, 0.1666667) * 0.3;
     if ( aa >= 1.0 ) Conduit[k].superCritical = TRUE;
     else             Conduit[k].superCritical = FALSE;
